@@ -1,8 +1,7 @@
-import PropTypes from "prop-types";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import useInput from "../hooks/useInput";
 import { register } from "../utils/network-data";
-import { useNavigate } from "react-router-dom";
 
 const RegisterInput = () => {
    const [name, onNameChangeHandler] = useInput();
@@ -63,10 +62,6 @@ const RegisterInput = () => {
          <button>Register</button>
       </form>
    );
-};
-
-RegisterInput.propTypes = {
-   register: PropTypes.func.isRequired,
 };
 
 export default RegisterInput;

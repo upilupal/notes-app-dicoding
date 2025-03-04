@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, Route, Routes, useSearchParams } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
+import { LocaleProvider } from "../contexts/LangContext";
 import { ThemeProvider } from "../contexts/ThemeContext";
 import AddNotePage from "../pages/AddNotePage";
 import ArchiveNotePage from "../pages/ArchiveNotePage";
@@ -12,15 +13,12 @@ import Navbar from "./Navbar";
 import PageNotFound from "./PageNotFound";
 import ToggleLang from "./ToggleLang";
 import ToggleTheme from "./ToggleTheme";
-import { LocaleProvider } from "../contexts/LangContext";
 
 function NoteApp() {
-   const [searchParams, setSearchParams] = useSearchParams();
    const [authedUser, setAuthedUser] = useState(null);
    const [initializing, setInitializing] = useState(true);
    const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
    const [locale, setLocale] = useState(localStorage.getItem("locale") || "id");
-   const keyword = searchParams.get("keyword") || "";
 
    useEffect(() => {
       async function fetchAuthedUser() {
@@ -40,10 +38,6 @@ function NoteApp() {
    useEffect(() => {
       document.documentElement.setAttribute("data-locale", locale);
    }, [locale]);
-
-   function changeSearchParams(keyword) {
-      setSearchParams({ keyword });
-   }
 
    async function onLoginSuccess({ accessToken }) {
       putAccessToken(accessToken);
@@ -137,28 +131,9 @@ function NoteApp() {
                </header>
                <main>
                   <Routes>
-                     <Route
-                        path="/"
-                        element={
-                           <HomePage
-                              defaulKeyword={keyword}
-                              keywordChange={changeSearchParams}
-                           />
-                        }
-                     />
-                     <Route
-                        path="/notes/:id"
-                        element={<DetailPage id={authedUser.id} />}
-                     />
-                     <Route
-                        path="/archive"
-                        element={
-                           <ArchiveNotePage
-                              defaulKeyword={keyword}
-                              keywordChange={changeSearchParams}
-                           />
-                        }
-                     />
+                     <Route path="/" element={<HomePage />} />
+                     <Route path="/notes/:id" element={<DetailPage />} />
+                     <Route path="/archive" element={<ArchiveNotePage />} />
                      <Route path="/notes/new" element={<AddNotePage />} />
                      <Route path="*" element={<PageNotFound />} />
                   </Routes>

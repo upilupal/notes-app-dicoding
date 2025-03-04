@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import NoteDetail from "../components/NoteDetail";
@@ -57,9 +56,5 @@ function DetailPage() {
       </section>
    );
 }
-
-DetailPage.propTypes = {
-   id: PropTypes.string.isRequired,
-};
 
 export default DetailPage;

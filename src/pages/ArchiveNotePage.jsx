@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import NoteList from "../components/NoteList";
@@ -15,28 +14,32 @@ function ArchiveNotePage() {
    const { locale } = useContext(LocaleContext);
 
    useEffect(() => {
-      getArchivedNotes().then(({ data }) => {
-         setNotes(data);
-      });
+      async function fetchNotes() {
+         const { error, data } = await getArchivedNotes();
+         if (!error) {
+            setNotes(data);
+         }
+      }
+
+      fetchNotes();
    }, []);
 
-   function onKeywordChangeHandler(keyword) {
-      setKeyword(keyword);
-      setSearchParams({ keyword });
+   function onKeywordChangeHandler(newKeyword) {
+      setKeyword(newKeyword);
+      setSearchParams({ keyword: newKeyword });
    }
+
+   const filteredNotes = notes.filter((note) =>
+      note.title.toLowerCase().includes(keyword.toLowerCase())
+   );
 
    return (
       <section>
          <h2>{locale === "id" ? "Catatan Arsip" : "Archive Notes"}</h2>
          <SearchBar keyword={keyword} keywordChange={onKeywordChangeHandler} />
-         <NoteList notes={notes} />
+         <NoteList notes={filteredNotes} />
       </section>
    );
 }
-
-ArchiveNotePage.propTypes = {
-   defaultKeyword: PropTypes.string,
-   keywordChange: PropTypes.func.isRequired,
-};
 
 export default ArchiveNotePage;

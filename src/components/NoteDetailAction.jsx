@@ -3,18 +3,17 @@ import React from "react";
 import {
    MdOutlineArchive,
    MdOutlineDelete,
-   MdOutlineEdit,
-   MdOutlineUnarchive,
+   MdOutlineUnarchive
 } from "react-icons/md";
 
 const NoteDetailAction = ({
    id,
    onDelete,
    onArchive,
-   
    isArchived,
    onUnarchive,
 }) => {
+   
    return (
       <section className="detail-page__action">
          <div>
@@ -33,7 +32,6 @@ const NoteDetailAction = ({
                <MdOutlineDelete />
             </button>
          </div>
-     
       </section>
    );
 };
