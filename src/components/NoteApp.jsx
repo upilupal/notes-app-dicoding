@@ -19,7 +19,7 @@ function NoteApp() {
    const [authedUser, setAuthedUser] = useState(null);
    const [initializing, setInitializing] = useState(true);
    const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
-   const [locale, setLocale] = useState(localStorage.getItem('locale') || 'id');
+   const [locale, setLocale] = useState(localStorage.getItem("locale") || "id");
    const keyword = searchParams.get("keyword") || "";
 
    useEffect(() => {
@@ -27,12 +27,12 @@ function NoteApp() {
          const { data } = await getUserLogged();
          if (data) {
             setAuthedUser(data);
-            setInitializing(false);
          }
+         setInitializing(false);
       }
       fetchAuthedUser();
    }, []);
-   
+
    useEffect(() => {
       document.documentElement.setAttribute("data-theme", theme);
    }, [theme]);
@@ -40,7 +40,7 @@ function NoteApp() {
    useEffect(() => {
       document.documentElement.setAttribute("data-locale", locale);
    }, [locale]);
-   
+
    function changeSearchParams(keyword) {
       setSearchParams({ keyword });
    }
@@ -55,7 +55,6 @@ function NoteApp() {
       setAuthedUser(null);
       putAccessToken("");
    };
-
 
    const toggleTheme = () => {
       setTheme((prevTheme) => {
